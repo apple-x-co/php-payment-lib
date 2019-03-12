@@ -9,17 +9,44 @@
 namespace Payment\LINEPay;
 
 
+use Payment\LINEPay;
+use Payment\LINEPay\PreapprovedPayCheck\PreapprovedPayCheckResultBuilder;
 use Payment\ResultInterface;
 
 class PreapprovedPayCheck implements APIInterface
 {
+    /** @var LINEPay */
+    private $linepay = null;
+
+    /** @var string */
+    private $reg_key = null;
+
+    /** @var bool */
+    private $credit_card_auth = false;
+
+    /**
+     * PreapprovedPayPayment constructor.
+     *
+     * @param LINEPay $linepay
+     * @param string $reg_key
+     * @param bool $credit_card_auth
+     */
+    public function __construct(
+        $linepay,
+        $reg_key,
+        $credit_card_auth
+    ) {
+        $this->linepay          = $linepay;
+        $this->reg_key          = $reg_key;
+        $this->credit_card_auth = $credit_card_auth;
+    }
 
     /**
      * @return string
      */
     public function requestMethod()
     {
-        // TODO: Implement requestMethod() method.
+        return 'GET';
     }
 
     /**
@@ -27,7 +54,11 @@ class PreapprovedPayCheck implements APIInterface
      */
     public function requestUrl()
     {
-        // TODO: Implement requestUrl() method.
+        $query_string = http_build_query([
+            'creditCardAuth' => $this->credit_card_auth ? 'true' : 'false'
+        ]);
+
+        return $this->linepay->getEndPoint()->getPreapprovedPayCheckUrl($this->reg_key) . '?' . $query_string;
     }
 
     /**
@@ -35,7 +66,7 @@ class PreapprovedPayCheck implements APIInterface
      */
     public function requestOptions()
     {
-        // TODO: Implement requestOptions() method.
+        return [];
     }
 
     /**
@@ -45,6 +76,11 @@ class PreapprovedPayCheck implements APIInterface
      */
     public function buildResult($responseObject)
     {
-        // TODO: Implement buildResult() method.
+        $builder = new PreapprovedPayCheckResultBuilder();
+        $result  = $builder
+            ->setApiResult($responseObject)
+            ->build();
+
+        return $result;
     }
 }

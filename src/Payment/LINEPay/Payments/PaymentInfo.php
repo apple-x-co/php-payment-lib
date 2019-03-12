@@ -23,7 +23,7 @@ class PaymentInfo
     /** @var string */
     private $product_name = null;
 
-    /** @var string */
+    /** @var string USD|JPY|TWD|THB */
     private $currency = null;
 
     /** @var PaymentPayinfo[] */

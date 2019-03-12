@@ -11,8 +11,6 @@ namespace Payment\LINEPay;
 
 use Payment\LINEPay;
 use Payment\LINEPay\Refund\RefundResultBuilder;
-use Payment\LINEPay\Refund\RefundSuccess;
-use Payment\LINEPay\Refund\RefundFailure;
 use Payment\ResultInterface;
 
 class Refund implements APIInterface

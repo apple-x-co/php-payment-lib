@@ -9,17 +9,38 @@
 namespace Payment\LINEPay;
 
 
+use Payment\LINEPay;
+use Payment\LINEPay\PreapprovedPayExpire\PreapprovedPayExpireResultBuilder;
 use Payment\ResultInterface;
 
 class PreapprovedPayExpire implements APIInterface
 {
+    /** @var LINEPay */
+    private $linepay = null;
+
+    /** @var string */
+    private $reg_key = null;
+
+    /**
+     * PreapprovedPayPayment constructor.
+     *
+     * @param LINEPay $linepay
+     * @param string $reg_key
+     */
+    public function __construct(
+        $linepay,
+        $reg_key
+    ) {
+        $this->linepay          = $linepay;
+        $this->reg_key          = $reg_key;
+    }
 
     /**
      * @return string
      */
     public function requestMethod()
     {
-        // TODO: Implement requestMethod() method.
+        return 'POST';
     }
 
     /**
@@ -27,7 +48,7 @@ class PreapprovedPayExpire implements APIInterface
      */
     public function requestUrl()
     {
-        // TODO: Implement requestUrl() method.
+        return $this->linepay->getEndPoint()->getPreapprovedPayExpireUrl($this->reg_key);
     }
 
     /**
@@ -35,7 +56,7 @@ class PreapprovedPayExpire implements APIInterface
      */
     public function requestOptions()
     {
-        // TODO: Implement requestOptions() method.
+        return [];
     }
 
     /**
@@ -45,6 +66,11 @@ class PreapprovedPayExpire implements APIInterface
      */
     public function buildResult($responseObject)
     {
-        // TODO: Implement buildResult() method.
+        $builder = new PreapprovedPayExpireResultBuilder();
+        $result  = $builder
+            ->setApiResult($responseObject)
+            ->build();
+
+        return $result;
     }
 }

@@ -11,8 +11,6 @@ namespace Payment\LINEPay;
 
 use Payment\LINEPay;
 use Payment\LINEPay\Reservation\ReservationResultBuilder;
-use Payment\LINEPay\Reservation\ReservationSuccess;
-use Payment\LINEPay\Reservation\ReservationFailure;
 use Payment\ResultInterface;
 
 class Reservation implements APIInterface
@@ -29,7 +27,7 @@ class Reservation implements APIInterface
     /** @var int */
     private $amount = null;
 
-    /** @var string */
+    /** @var string USD|JPY|TWD|THB */
     private $currency = null;
 
     /** @var string */
@@ -38,11 +36,11 @@ class Reservation implements APIInterface
     /** @var string */
     private $one_time_key = null;
 
-    /** @var string */
-    private $confirm_url = null;
+    /** @var string CLIENT|SERVER */
+    private $confirm_url = 'CLIENT';
 
     /** @var string */
-    private $confirm_url_type = null;
+    private $confirm_url_type = false;
 
     /** @var bool */
     private $check_confirm_url_browser = null;
@@ -59,14 +57,17 @@ class Reservation implements APIInterface
     /** @var string */
     private $delivery_place_phone = null;
 
-    /** @var string */
-    private $pay_type = null;
+    /** @var string NORMAL|PREAPPROVED */
+    private $pay_type = 'NORMAL';
 
-    /** @var string */
+    /** @var string ja|ko|en|zh-Hans|zh-Hant|th */
     private $lang_cd = null;
 
     /** @var bool */
-    private $capture = null;
+    private $capture = true;
+
+    /** @var string */
+    private $branch_name = null;
 
     /**
      * Reservation constructor.
@@ -88,6 +89,7 @@ class Reservation implements APIInterface
      * @param string $pay_type
      * @param string $lang_cd
      * @param bool $capture
+     * @param string $branch_name
      */
     public function __construct(
         $linepay,
@@ -106,7 +108,8 @@ class Reservation implements APIInterface
         $delivery_place_phone,
         $pay_type,
         $lang_cd,
-        $capture
+        $capture,
+        $branch_name
     ) {
         $this->linepay                   = $linepay;
         $this->product_name              = $product_name;
@@ -125,6 +128,7 @@ class Reservation implements APIInterface
         $this->pay_type                  = $pay_type;
         $this->lang_cd                   = $lang_cd;
         $this->capture                   = $capture;
+        $this->branch_name               = $branch_name;
     }
 
     /**
@@ -190,6 +194,11 @@ class Reservation implements APIInterface
         }
         if ($this->capture !== null) {
             $params += ['capture' => $this->capture ? 'true' : 'false'];
+        }
+        if ($this->branch_name !== null) {
+            $params += ['extras' => [
+                'branchName' => $this->branch_name
+            ]];
         }
 
         return [

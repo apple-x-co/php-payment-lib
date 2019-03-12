@@ -126,4 +126,40 @@ class EndPoint
 
         return str_replace('{transactionId}', $transaction_id, $url);
     }
+
+    /**
+     * @param string $reg_key
+     *
+     * @return string
+     */
+    public function getPreapprovedPayPaymentUrl($reg_key)
+    {
+        $url = $this->base_url . $this::PREAPPROVED_PAY_PAYMENT;
+
+        return str_replace('{regKey}', $reg_key, $url);
+    }
+
+    /**
+     * @param string $reg_key
+     *
+     * @return string
+     */
+    public function getPreapprovedPayCheckUrl($reg_key)
+    {
+        $url = $this->base_url . $this::PREAPPROVED_PAY_CHECK;
+
+        return str_replace('{regKey}', $reg_key, $url);
+    }
+
+    /**
+     * @param string $reg_key
+     *
+     * @return string
+     */
+    public function getPreapprovedPayExpireUrl($reg_key)
+    {
+        $url = $this->base_url . $this::PREAPPROVED_PAY_EXPIRE;
+
+        return str_replace('{regKey}', $reg_key, $url);
+    }
 }

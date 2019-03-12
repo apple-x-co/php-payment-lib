@@ -26,7 +26,7 @@ class ReservationBuilder implements LINEPay\APIBuilderInterface
     /** @var int */
     private $amount = null;
 
-    /** @var string */
+    /** @var string USD|JPY|TWD|THB */
     private $currency = null;
 
     /** @var string */
@@ -38,7 +38,7 @@ class ReservationBuilder implements LINEPay\APIBuilderInterface
     /** @var string */
     private $confirm_url = null;
 
-    /** @var string */
+    /** @var string CLIENT|SERVER */
     private $confirm_url_type = 'CLIENT';
 
     /** @var bool */
@@ -56,14 +56,17 @@ class ReservationBuilder implements LINEPay\APIBuilderInterface
     /** @var string */
     private $delivery_place_phone = null;
 
-    /** @var string */
+    /** @var string NORMAL|PREAPPROVED */
     private $pay_type = 'NORMAL';
 
-    /** @var string */
+    /** @var string ja|ko|en|zh-Hans|zh-Hant|th */
     private $lang_cd = null;
 
     /** @var bool */
     private $capture = true;
+
+    /** @var string */
+    private $branch_name = null;
 
     /**
      * ReservationBuilder constructor.
@@ -277,6 +280,18 @@ class ReservationBuilder implements LINEPay\APIBuilderInterface
     }
 
     /**
+     * @param string $branch_name
+     *
+     * @return $this
+     */
+    public function setBranchName($branch_name)
+    {
+        $this->branch_name = $branch_name;
+
+        return $this;
+    }
+
+    /**
      * @return Reservation
      */
     public function build()
@@ -298,7 +313,8 @@ class ReservationBuilder implements LINEPay\APIBuilderInterface
             $this->delivery_place_phone,
             $this->pay_type,
             $this->lang_cd,
-            $this->capture
+            $this->capture,
+            $this->branch_name
         );
     }
 }
