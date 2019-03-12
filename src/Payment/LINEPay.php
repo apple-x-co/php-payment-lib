@@ -14,6 +14,8 @@ use Payment\LINEPay\EndPoint;
 
 class LINEPay
 {
+    const VERSION = '1.0.0';
+
     const REAL_DOMAIN = 'api-pay.line.me';
     const SANDBOX_DOMAIN = 'sandbox-api-pay.line.me';
 
