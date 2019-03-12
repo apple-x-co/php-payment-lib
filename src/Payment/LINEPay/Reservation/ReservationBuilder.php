@@ -12,7 +12,7 @@ namespace Payment\LINEPay\Reservation;
 use Payment\LINEPay;
 use Payment\LINEPay\Reservation;
 
-class ReservationBuilder
+class ReservationBuilder implements LINEPay\APIBuilderInterface
 {
     /** @var LINEPay */
     private $linepay = null;
@@ -146,90 +146,134 @@ class ReservationBuilder
 
     /**
      * @param string $product_image_url
+     *
+     * @return $this
      */
     public function setProductImageUrl($product_image_url)
     {
         $this->product_image_url = $product_image_url;
+
+        return $this;
     }
 
     /**
      * @param string $mid
+     *
+     * @return $this
      */
     public function setMid($mid)
     {
         $this->mid = $mid;
+
+        return $this;
     }
 
     /**
      * @param string $one_time_key
+     *
+     * @return $this
      */
     public function setOneTimeKey($one_time_key)
     {
         $this->one_time_key = $one_time_key;
+
+        return $this;
     }
 
     /**
      * @param string $confirm_url_type
+     *
+     * @return $this
      */
     public function setConfirmUrlType($confirm_url_type)
     {
         $this->confirm_url_type = $confirm_url_type;
+
+        return $this;
     }
 
     /**
      * @param bool $check_confirm_url_browser
+     *
+     * @return $this
      */
     public function setCheckConfirmUrlBrowser($check_confirm_url_browser)
     {
         $this->check_confirm_url_browser = $check_confirm_url_browser;
+
+        return $this;
     }
 
     /**
      * @param string $cancel_url
+     *
+     * @return $this
      */
     public function setCancelUrl($cancel_url)
     {
         $this->cancel_url = $cancel_url;
+
+        return $this;
     }
 
     /**
      * @param string $package_name
+     *
+     * @return $this
      */
     public function setPackageName($package_name)
     {
         $this->package_name = $package_name;
+
+        return $this;
     }
 
     /**
      * @param string $delivery_place_phone
+     *
+     * @return $this
      */
     public function setDeliveryPlacePhone($delivery_place_phone)
     {
         $this->delivery_place_phone = $delivery_place_phone;
+
+        return $this;
     }
 
     /**
      * @param string $pay_type
+     *
+     * @return $this
      */
     public function setPayType($pay_type)
     {
         $this->pay_type = $pay_type;
+
+        return $this;
     }
 
     /**
      * @param string $lang_cd
+     *
+     * @return $this
      */
     public function setLangCd($lang_cd)
     {
         $this->lang_cd = $lang_cd;
+
+        return $this;
     }
 
     /**
      * @param bool $capture
+     *
+     * @return $this
      */
     public function setCapture($capture)
     {
         $this->capture = $capture;
+
+        return $this;
     }
 
     /**

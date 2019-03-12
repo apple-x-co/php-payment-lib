@@ -9,17 +9,38 @@
 namespace Payment\LINEPay;
 
 
+use Payment\LINEPay;
+use Payment\LINEPay\Void\VoidResultBuilder;
 use Payment\ResultInterface;
 
 class Void implements APIInterface
 {
+    /** @var LINEPay */
+    private $linepay = null;
+
+    /** @var string */
+    private $transaction_id;
+
+    /**
+     * Confirm constructor.
+     *
+     * @param LINEPay $linepay
+     * @param int $amount
+     * @param string $currency
+     * @param string $transaction_id
+     */
+    public function __construct($linepay, $transaction_id)
+    {
+        $this->linepay        = $linepay;
+        $this->transaction_id = $transaction_id;
+    }
 
     /**
      * @return string
      */
     public function requestMethod()
     {
-        // TODO: Implement requestMethod() method.
+        return 'POST';
     }
 
     /**
@@ -27,7 +48,7 @@ class Void implements APIInterface
      */
     public function requestUrl()
     {
-        // TODO: Implement requestUrl() method.
+        return $this->linepay->getEndPoint()->getVoidUrl($this->transaction_id);
     }
 
     /**
@@ -35,7 +56,7 @@ class Void implements APIInterface
      */
     public function requestOptions()
     {
-        // TODO: Implement requestOptions() method.
+        return [];
     }
 
     /**
@@ -45,6 +66,11 @@ class Void implements APIInterface
      */
     public function buildResult($responseObject)
     {
-        // TODO: Implement buildResult() method.
+        $builder = new VoidResultBuilder();
+        $result  = $builder
+            ->setApiResult($responseObject)
+            ->build();
+
+        return $result;
     }
 }

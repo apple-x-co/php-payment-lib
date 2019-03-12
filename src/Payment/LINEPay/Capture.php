@@ -9,17 +9,46 @@
 namespace Payment\LINEPay;
 
 
+use Payment\LINEPay;
+use Payment\LINEPay\Capture\CaptureResultBuilder;
 use Payment\ResultInterface;
 
 class Capture implements APIInterface
 {
+    /** @var LINEPay */
+    private $linepay = null;
+
+    /** @var int */
+    private $amount;
+
+    /** @var string */
+    private $currency;
+
+    /** @var string */
+    private $transaction_id;
+
+    /**
+     * Confirm constructor.
+     *
+     * @param LINEPay $linepay
+     * @param int $amount
+     * @param string $currency
+     * @param string $transaction_id
+     */
+    public function __construct($linepay, $amount, $currency, $transaction_id)
+    {
+        $this->linepay        = $linepay;
+        $this->amount         = $amount;
+        $this->currency       = $currency;
+        $this->transaction_id = $transaction_id;
+    }
 
     /**
      * @return string
      */
     public function requestMethod()
     {
-        // TODO: Implement requestMethod() method.
+        return 'POST';
     }
 
     /**
@@ -27,7 +56,7 @@ class Capture implements APIInterface
      */
     public function requestUrl()
     {
-        // TODO: Implement requestUrl() method.
+        return $this->linepay->getEndPoint()->getCaptureUrl($this->transaction_id);
     }
 
     /**
@@ -35,7 +64,12 @@ class Capture implements APIInterface
      */
     public function requestOptions()
     {
-        // TODO: Implement requestOptions() method.
+        return [
+            'json' => [
+                'amount'   => $this->amount,
+                'currency' => $this->currency
+            ]
+        ];
     }
 
     /**
@@ -45,6 +79,11 @@ class Capture implements APIInterface
      */
     public function buildResult($responseObject)
     {
-        // TODO: Implement buildResult() method.
+        $builder = new CaptureResultBuilder();
+        $result  = $builder
+            ->setApiResult($responseObject)
+            ->build();
+
+        return $result;
     }
 }

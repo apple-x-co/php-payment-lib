@@ -6,25 +6,22 @@
  * Time: 10:47
  */
 
-namespace Payment\LINEPay\Refund;
+namespace Payment\LINEPay\Void;
 
 
 use Payment\LINEPay;
-use Payment\LINEPay\Refund;
+use Payment\LINEPay\Void;
 
-class RefundBuilder implements LINEPay\APIBuilderInterface
+class VoidBuilder implements LINEPay\APIBuilderInterface
 {
     /** @var LINEPay */
     private $linepay = null;
-
-    /** @var int */
-    private $amount;
 
     /** @var string */
     private $transaction_id;
 
     /**
-     * RefundBuilder constructor.
+     * VoidBuilder constructor.
      */
     public function __construct()
     {
@@ -43,18 +40,6 @@ class RefundBuilder implements LINEPay\APIBuilderInterface
     }
 
     /**
-     * @param int $amount
-     *
-     * @return $this
-     */
-    public function setAmount($amount)
-    {
-        $this->amount = $amount;
-
-        return $this;
-    }
-
-    /**
      * @param string $transaction_id
      *
      * @return $this
@@ -67,13 +52,12 @@ class RefundBuilder implements LINEPay\APIBuilderInterface
     }
 
     /**
-     * @return Refund
+     * @return Void
      */
     public function build()
     {
-        return new Refund(
+        return new Void(
             $this->linepay,
-            $this->amount,
             $this->transaction_id
         );
     }

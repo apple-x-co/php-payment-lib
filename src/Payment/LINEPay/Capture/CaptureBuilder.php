@@ -6,13 +6,13 @@
  * Time: 10:47
  */
 
-namespace Payment\LINEPay\Refund;
+namespace Payment\LINEPay\Capture;
 
 
 use Payment\LINEPay;
-use Payment\LINEPay\Refund;
+use Payment\LINEPay\Capture;
 
-class RefundBuilder implements LINEPay\APIBuilderInterface
+class CaptureBuilder implements LINEPay\APIBuilderInterface
 {
     /** @var LINEPay */
     private $linepay = null;
@@ -21,10 +21,13 @@ class RefundBuilder implements LINEPay\APIBuilderInterface
     private $amount;
 
     /** @var string */
+    private $currency;
+
+    /** @var string */
     private $transaction_id;
 
     /**
-     * RefundBuilder constructor.
+     * CaptureBuilder constructor.
      */
     public function __construct()
     {
@@ -55,6 +58,18 @@ class RefundBuilder implements LINEPay\APIBuilderInterface
     }
 
     /**
+     * @param string $currency
+     *
+     * @return $this
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    /**
      * @param string $transaction_id
      *
      * @return $this
@@ -67,13 +82,14 @@ class RefundBuilder implements LINEPay\APIBuilderInterface
     }
 
     /**
-     * @return Refund
+     * @return Capture
      */
     public function build()
     {
-        return new Refund(
+        return new Capture(
             $this->linepay,
             $this->amount,
+            $this->currency,
             $this->transaction_id
         );
     }

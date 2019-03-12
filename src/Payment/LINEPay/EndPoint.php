@@ -94,4 +94,36 @@ class EndPoint
 
         return str_replace('{transactionId}', $transaction_id, $url);
     }
+
+    /**
+     * @return string
+     */
+    public function getAuthorizationsUrl()
+    {
+        return $this->base_url . $this::AUTHORIZATIONS;
+    }
+
+    /**
+     * @param string $transaction_id
+     *
+     * @return string
+     */
+    public function getCaptureUrl($transaction_id)
+    {
+        $url = $this->base_url . $this::CAPTURE;
+
+        return str_replace('{transactionId}', $transaction_id, $url);
+    }
+
+    /**
+     * @param string $transaction_id
+     *
+     * @return string
+     */
+    public function getVoidUrl($transaction_id)
+    {
+        $url = $this->base_url . $this::VOID;
+
+        return str_replace('{transactionId}', $transaction_id, $url);
+    }
 }

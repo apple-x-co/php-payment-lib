@@ -6,13 +6,13 @@
  * Time: 10:47
  */
 
-namespace Payment\LINEPay\Payments;
+namespace Payment\LINEPay\Authorizations;
 
 
 use Payment\LINEPay;
-use Payment\LINEPay\Payments;
+use Payment\LINEPay\Authorizations;
 
-class PaymentsBuilder implements LINEPay\APIBuilderInterface
+class AuthorizationsBuilder implements LINEPay\APIBuilderInterface
 {
     /** @var LINEPay */
     private $linepay = null;
@@ -67,11 +67,11 @@ class PaymentsBuilder implements LINEPay\APIBuilderInterface
     }
 
     /**
-     * @return Payments
+     * @return Authorizations
      */
     public function build()
     {
-        return new Payments(
+        return new Authorizations(
             $this->linepay,
             $this->transaction_ids,
             $this->order_ids

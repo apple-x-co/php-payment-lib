@@ -12,7 +12,7 @@ namespace Payment\LINEPay\Confirm;
 use Payment\LINEPay;
 use Payment\LINEPay\Confirm;
 
-class ConfirmBuilder
+class ConfirmBuilder implements LINEPay\APIBuilderInterface
 {
     /** @var LINEPay */
     private $linepay = null;

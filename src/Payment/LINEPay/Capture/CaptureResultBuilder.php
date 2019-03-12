@@ -6,13 +6,13 @@
  * Time: 11:32
  */
 
-namespace Payment\LINEPay\Confirm;
+namespace Payment\LINEPay\Capture;
 
 
 use Payment\LINEPay\APIResultBuilderInterface;
 use Payment\ResultInterface;
 
-class ConfirmResultBuilder implements APIResultBuilderInterface
+class CaptureResultBuilder implements APIResultBuilderInterface
 {
     /** @var \stdClass */
     private $api_result;
@@ -39,37 +39,24 @@ class ConfirmResultBuilder implements APIResultBuilderInterface
     public function build()
     {
         if ($this->api_result->returnCode === '0000') {
-            $success = new ConfirmSuccess();
+            $success = new CaptureSuccess();
             $success
                 ->setOrderId($this->api_result->info->orderId)
                 ->setTransactionId($this->api_result->info->transactionId);
 
-            if (property_exists($this->api_result->info, 'authorizationExpireDate')) {
-                $success->setAuthorizationExpireDate($this->api_result->info->authorizationExpireDate);
-            }
-            if (property_exists($this->api_result->info, 'regKey')) {
-                $success->setRegKey($this->api_result->info->regKey);
-            }
-
             foreach ($this->api_result->info->payInfo as $pay_info) {
-                $confirmPayinfo = new ConfirmPayinfo();
-                $confirmPayinfo
+                $capturePayinfo = new CapturePayinfo();
+                $capturePayinfo
                     ->setMethod($pay_info->method)
                     ->setAmount($pay_info->amount);
 
-                if (property_exists($pay_info, 'creditCardNickname')) {
-                    $confirmPayinfo->setCreditCardNickname($pay_info->creditCardNickname);
-                }
-                if (property_exists($pay_info, 'creditCardBrand')) {
-                    $confirmPayinfo->setCreditCardBrand($pay_info->creditCardBrand);
-                }
-                $success->addPayInfo($confirmPayinfo);
+                $success->addPayInfo($capturePayinfo);
             }
 
             return $success;
         }
 
-        $failure = new ConfirmFailure();
+        $failure = new CaptureFailure();
         $failure
             ->setFailureCode($this->api_result->returnCode)
             ->setFailureReason($this->api_result->returnMessage);

@@ -6,13 +6,13 @@
  * Time: 11:32
  */
 
-namespace Payment\LINEPay\Payments;
+namespace Payment\LINEPay\Authorizations;
 
 
 use Payment\LINEPay\APIResultBuilderInterface;
 use Payment\ResultInterface;
 
-class PaymentsResultBuilder implements APIResultBuilderInterface
+class AuthorizationsResultBuilder implements APIResultBuilderInterface
 {
     /** @var \stdClass */
     private $api_result;
@@ -39,34 +39,36 @@ class PaymentsResultBuilder implements APIResultBuilderInterface
     public function build()
     {
         if ($this->api_result->returnCode === '0000') {
-            $success = new PaymentsSuccess();
+            $success = new AuthorizationsSuccess();
 
             foreach ($this->api_result->info as $info) {
-                $paymentInfo = new PaymentInfo();
-                $paymentInfo
+                $authorizationInfo = new AuthorizationInfo();
+                $authorizationInfo
                     ->setTransactionId($info->transactionId)
                     ->setTransactionDate($info->transactionDate)
                     ->setTransactionType($info->transactionType)
+                    ->setPayStatus($info->payStatus)
                     ->setProductName($info->productName)
                     ->setCurrency($info->currency)
-                    ->setOrderId($info->orderId);
+                    ->setOrderId($info->orderId)
+                    ->setAuthorizationExpireDate($info->authorizationExpireDate);
 
                 foreach ($info->payInfo as $payinfo) {
-                    $paymentPayinfo = new PaymentPayinfo();
-                    $paymentPayinfo
+                    $authorizationPayinfo = new AuthorizationPayinfo();
+                    $authorizationPayinfo
                         ->setMethod($payinfo->method)
                         ->setAmount($payinfo->amount);
 
-                    $paymentInfo->addPayinfo($paymentPayinfo);
+                    $authorizationInfo->addPayinfo($authorizationPayinfo);
                 }
 
-                $success->addInfo($paymentInfo);
+                $success->addInfo($authorizationInfo);
             }
 
             return $success;
         }
 
-        $failure = new PaymentsFailure();
+        $failure = new AuthorizationsFailure();
         $failure
             ->setFailureCode($this->api_result->returnCode)
             ->setFailureReason($this->api_result->returnMessage);

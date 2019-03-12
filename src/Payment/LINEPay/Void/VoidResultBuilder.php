@@ -6,13 +6,13 @@
  * Time: 11:32
  */
 
-namespace Payment\LINEPay\Reservation;
+namespace Payment\LINEPay\Void;
 
 
 use Payment\LINEPay\APIResultBuilderInterface;
 use Payment\ResultInterface;
 
-class ReservationResultBuilder implements APIResultBuilderInterface
+class VoidResultBuilder implements APIResultBuilderInterface
 {
     /** @var \stdClass */
     private $api_result;
@@ -39,17 +39,12 @@ class ReservationResultBuilder implements APIResultBuilderInterface
     public function build()
     {
         if ($this->api_result->returnCode === '0000') {
-            $success = new ReservationSuccess();
-            $success
-                ->setPaymentUrl($this->api_result->info->paymentUrl->web)
-                ->setPaymentUrlScheme($this->api_result->info->paymentUrl->app)
-                ->setTransactionId($this->api_result->info->transactionId)
-                ->setAccessToken($this->api_result->info->paymentAccessToken);
+            $success = new VoidSuccess();
 
             return $success;
         }
 
-        $failure = new ReservationFailure();
+        $failure = new VoidFailure();
         $failure
             ->setFailureCode($this->api_result->returnCode)
             ->setFailureReason($this->api_result->returnMessage);

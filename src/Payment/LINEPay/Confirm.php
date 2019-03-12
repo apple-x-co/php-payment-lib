@@ -11,8 +11,6 @@ namespace Payment\LINEPay;
 
 use Payment\LINEPay;
 use Payment\LINEPay\Confirm\ConfirmResultBuilder;
-use Payment\LINEPay\Confirm\ConfirmSuccess;
-use Payment\LINEPay\Confirm\ConfirmFailure;
 use Payment\ResultInterface;
 
 class Confirm implements APIInterface

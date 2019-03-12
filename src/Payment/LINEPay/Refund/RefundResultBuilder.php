@@ -9,9 +9,10 @@
 namespace Payment\LINEPay\Refund;
 
 
+use Payment\LINEPay\APIResultBuilderInterface;
 use Payment\ResultInterface;
 
-class RefundResultBuilder
+class RefundResultBuilder implements APIResultBuilderInterface
 {
     /** @var \stdClass */
     private $api_result;
