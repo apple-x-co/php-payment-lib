@@ -1,21 +1,12 @@
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         bootstrap="../vendor/autoload.php"
-         cacheTokens="true"
+<phpunit bootstrap="./bootstrap.php"
          colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         syntaxCheck="false"
-         verbose="false">
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="false">
-            <directory>../src/Payment/</directory>
-        </whitelist>
-    </filter>
-    <testsuite name="Payment Test Suite">
-        <directory>.</directory>
-    </testsuite>
+         beStrictAboutCoversAnnotation="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTestSize="true"
+         beStrictAboutChangesToGlobalState="true">
+    <testsuites>
+        <testsuite name="Payment Library">
+            <directory>./Payment/</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
