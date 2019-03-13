@@ -43,22 +43,6 @@ class LINEPay
     }
 
     /**
-     * @return mixed
-     */
-    public function getChannelId()
-    {
-        return $this->channel_id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getChannelSecret()
-    {
-        return $this->channel_secret;
-    }
-
-    /**
      * @return EndPoint
      */
     public function getEndPoint()
@@ -81,8 +65,8 @@ class LINEPay
         $options = [
             'headers' => [
                 'Content-Type'         => 'application/json; charset=UTF-8',
-                'X-LINE-ChannelId'     => $this->getChannelId(),
-                'X-LINE-ChannelSecret' => $this->getChannelSecret()
+                'X-LINE-ChannelId'     => $this->channel_id,
+                'X-LINE-ChannelSecret' => $this->channel_secret
             ]
         ];
 
