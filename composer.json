@@ -20,8 +20,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Payment\\": "src/Payment/",
-      "Tests\\Payment\\": "tests/Payment/"
+      "Payment\\": "src/",
+      "Tests\\Payment\\": "tests/"
     }
   }
 }

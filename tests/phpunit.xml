@@ -6,7 +6,7 @@
          beStrictAboutChangesToGlobalState="true">
     <testsuites>
         <testsuite name="Payment Library">
-            <directory>./Payment/</directory>
+            <directory>./</directory>
         </testsuite>
     </testsuites>
 </phpunit>
