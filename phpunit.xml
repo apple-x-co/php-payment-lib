@@ -1,4 +1,4 @@
-<phpunit bootstrap="./bootstrap.php"
+<phpunit bootstrap="./tests/bootstrap.php"
          colors="true"
          beStrictAboutCoversAnnotation="true"
          beStrictAboutOutputDuringTests="true"
@@ -6,7 +6,7 @@
          beStrictAboutChangesToGlobalState="true">
     <testsuites>
         <testsuite name="Payment Library">
-            <directory>./</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
 </phpunit>
