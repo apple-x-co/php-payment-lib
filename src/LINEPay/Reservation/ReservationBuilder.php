@@ -68,6 +68,9 @@ class ReservationBuilder implements LINEPay\APIBuilderInterface
     /** @var string */
     private $branch_name = null;
 
+    /** @var string HIDE_PAY_SCREEN */
+    private $flow_type = null;
+
     /**
      * ReservationBuilder constructor.
      */
@@ -287,6 +290,18 @@ class ReservationBuilder implements LINEPay\APIBuilderInterface
     public function setBranchName($branch_name)
     {
         $this->branch_name = $branch_name;
+
+        return $this;
+    }
+
+    /**
+     * @param string $flow_type
+     *
+     * @return $this
+     */
+    public function setFlowType($flow_type)
+    {
+        $this->flow_type = $flow_type;
 
         return $this;
     }

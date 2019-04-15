@@ -69,6 +69,9 @@ class Reservation implements APIInterface
     /** @var string */
     private $branch_name = null;
 
+    /** @var string HIDE_PAY_SCREEN */
+    private $flow_type = null;
+
     /**
      * Reservation constructor.
      *
@@ -90,6 +93,7 @@ class Reservation implements APIInterface
      * @param string $lang_cd
      * @param bool $capture
      * @param string $branch_name
+     * @param string $flow_type
      */
     public function __construct(
         $linepay,
@@ -109,7 +113,8 @@ class Reservation implements APIInterface
         $pay_type,
         $lang_cd,
         $capture,
-        $branch_name
+        $branch_name,
+        $flow_type
     ) {
         $this->linepay                   = $linepay;
         $this->product_name              = $product_name;
@@ -129,6 +134,7 @@ class Reservation implements APIInterface
         $this->lang_cd                   = $lang_cd;
         $this->capture                   = $capture;
         $this->branch_name               = $branch_name;
+        $this->flow_type                 = $flow_type;
     }
 
     /**
@@ -199,6 +205,9 @@ class Reservation implements APIInterface
             $params += ['extras' => [
                 'branchName' => $this->branch_name
             ]];
+        }
+        if ($this->flow_type !== null) {
+            $params += ['flowType' => $this->flow_type];
         }
 
         return [
